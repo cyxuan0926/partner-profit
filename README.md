@@ -1,4 +1,4 @@
-# coopertive-partner
+# community-correction
 
 ## Project setup
 ```
