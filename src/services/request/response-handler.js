@@ -131,7 +131,11 @@ const publicResponseHandler = {
     return res.data
   },
   // 请求成功 无返回体成功分为正向成功和反向成功 需要区别处理
-  204: () => {},
+  204: res => {
+    const { url } = res.config
+
+    if (url.includes('/users/me/password/by-old-password')) return true
+  },
   // 请求失败 有错误返回体
   400: res => {
     res.data && tips(res.data.message)

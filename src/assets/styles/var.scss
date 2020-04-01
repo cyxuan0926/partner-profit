@@ -1,11 +1,11 @@
+$form-height-base: 34px !default;
+
 /* Typography
 -------------------------- */
-$--font-size-extra-large: 20px !default;
-$--font-size-large: 18px !default;
-$--font-size-medium: 16px !default;
-$--font-size-base: 14px !default;
-$--font-size-small: 13px !default;
-$--font-size-extra-small: 12px !default;
+$--font-size-base: 12px !default;
+$--font-size-small: 12px !default;
+$--font-size-medium: 14px !default;
+$--font-size-large: 16px !default;
 
 
 /* Color
@@ -48,37 +48,22 @@ $--menu-item-hover-fill: #4381e6 !default;
 
 /* Table
 -------------------------- */
-$--table-border-color: #e8e8e8 !default;
-$--table-font-color: $--color-text-primary !default;
-$--table-header-font-color: rgba(0, 0, 0, 0.65) !default;
-$--table-current-row-background-color: #e6f7ff !default;
-$--table-header-background-color: #fafafa !default;
+$--table-border-color: #e6e6e6 !default;
+$--table-header-color: $--color-text-regular !default;
+$--table-header-background-color: #f2f2f2 !default;
 
 /* Dialog
 -------------------------- */
-$--dialog-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !default;
+$--dialog-font-size: $--font-size-base !default;
 $--dialog-title-font-size: $--font-size-medium !default;
-$--dialog-padding-primary: 20px !default;
 
 /* Pagination
 -------------------------- */
 $--pagination-font-size: $--font-size-base !default;
 
-$--pagination-border-radius: 3px !default;
-
-$--pagination-button-width: 35.5px !default;
-
-$--pagination-button-height: 32px !default;
-
-$--pagination-button-disabled-color: $--color-text-placeholder !default;
-
-$--pagination-button-disabled-background-color: $--color-white !default;
-
-$--pagination-hover-color: $--color-primary !default;
-
 /* MessageBox
 -------------------------- */
-$--messagebox-font-size: $--font-size-medium !default;
+$--msgbox-font-size: $--font-size-base !default;
 
 /* Tab
 -------------------------- */

@@ -27,5 +27,9 @@ export default {
     commit(`account/${mutationsAccount.SET_AUTHORITIES}`, [], { root: true })
     commit(`account/${mutationsAccount.SET_PUBLICUSERINFO}`, {}, { root: true })
     Message.closeAll()
+  },
+
+  onCollapse({ commit }, collapse) {
+    commit(mutationsGlobal.SET_COLLAPSE, collapse)
   }
 }

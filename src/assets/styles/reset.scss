@@ -98,7 +98,6 @@ li {
 /* 消除IE连接虚线边框 */
 a {
   text-decoration: none;
-  color: inherit;
   outline: 0
 }
 
@@ -111,4 +110,8 @@ a,
 input,
 button {
   -webkit-tap-highlight-color: transparent;
+}
+
+ul, li, div, p, h1, span{
+  box-sizing: border-box;
 }

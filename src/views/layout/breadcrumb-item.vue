@@ -1,9 +1,9 @@
 <template>
   <el-breadcrumb class="com-breadcrumb" separator-class="el-icon-arrow-right">
     <el-breadcrumb-item v-if="$route.meta.isTheOnlyRoot"
-      >首页</el-breadcrumb-item
+      >主页</el-breadcrumb-item
     >
-    <el-breadcrumb-item v-else :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item v-else :to="{ path: '/home' }">主页</el-breadcrumb-item>
     <el-breadcrumb-item v-for="route in routes" :key="route.path">
       {{ route.meta.title }}
     </el-breadcrumb-item>
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+// import flattenDepth from 'lodash/flattenDepth'
+
 export default {
   name: 'ComBreadcrumb',
 
@@ -24,11 +26,6 @@ export default {
 
 <style lang="scss" scoped>
 .com-breadcrumb {
-  height: 38px;
-  padding: 0 $base-space * 3;
-  line-height: 38px;
-  background-color: #e6e6e6;
-
   .el-breadcrumb__item {
     ::v-deep .el-breadcrumb__inner.is-link {
       font-weight: normal;

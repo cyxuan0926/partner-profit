@@ -1,62 +1,73 @@
 <template>
-  <el-header>
-    <div class="logo">
-      <h1>社区矫正管理信息系统</h1>
-    </div>
+  <el-header height="46px">
+    <div class="header-container">
+      <div
+        :class="[
+          'header-container__title',
+          'transition__collapsed',
+          isCollapsed ? 'collapsed' : ''
+        ]"
+      >
+        <strong>合作商</strong>管理系统
+      </div>
 
-    <div class="toolbar">
-      <el-row class="toolbar__item toolbar__date">
-        <div>
-          <span>{{ nowTime['date'] }}</span>
-          <span>{{ nowTime['week'] }}</span>
+      <div class="header-container__toolbar">
+        <i class="iconfont icon-category bold" @click="onCollapse" />
+
+        <div class="dropdown-container">
+          <el-dropdown trigger="click" @command="onCommand">
+            <div class="user__information">
+              <img class="avatar" :src="userAvatar" alt="头像" />
+              <span class="user__name">hzs_admin</span>
+            </div>
+
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item :command="{ path: '/account/password' }"
+                >修改密码</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </el-dropdown>
+
+          <i class="iconfont icon-logout" @click="onLogout" />
         </div>
-      </el-row>
-      <el-row class="toolbar__item toolbar__user">
-        <div>
-          <!-- <el-avatar :src="userAvatar" size="small" /> -->
-          <span>欢迎您，{{ role }}</span>
-        </div>
-      </el-row>
-      <el-row class="toolbar__item toolbar__logout">
-        <div @click="onLogout">
-          <i class="el-icon-switch-button icon" />
-          <span>退出</span>
-        </div>
-      </el-row>
+      </div>
     </div>
   </el-header>
 </template>
 
 <script>
 import * as helper from '@/utils/helper'
+
 import routesPath from '@/router/routes-path'
-import { toDateString, toWeekString } from '@/utils/lang'
+
+import { mapState, mapActions } from 'vuex'
+
+import userAvatar from '@/assets/img/user-avatar.jpg'
 
 export default {
   data() {
-    const { role } = this.$store.state.account.token
-
     return {
-      role
+      userAvatar
     }
   },
 
   computed: {
-    nowTime() {
-      const now = Date.now()
-      const date = toDateString(now, 'yyyy年MM月dd日')
-      const week = toWeekString(now)
-
-      return { date, week }
-    }
+    ...mapState('global', ['isCollapsed'])
   },
 
   methods: {
+    ...mapActions('global', ['onCollapse']),
+
+    onCommand(path) {
+      this.$router.push(path)
+    },
+
     async onLogout() {
       try {
         await helper.$confirm('是否退出登陆?')
 
         this.$store.dispatch('global/logout')
+
         this.$router.push(routesPath.ACCOUNT_LOGIN)
       } catch (err) {
         Promise.reject(err)
@@ -67,86 +78,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/mixins';
-
 .el-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  height: $layout-header-height !important;
-  padding: 0 $base-space * 3;
+  padding: 0px;
 
-  font-size: $--font-size-extra-small;
-  color: #fff;
-  background-color: #4381e6;
-  box-shadow: 0px 1px 4px 0px rgba(0, 21, 41, 0.12);
-
-  .logo {
-    position: relative;
-    z-index: 3;
-
-    overflow: hidden;
+  .header-container {
+    height: 46px;
+    line-height: 46px;
     display: flex;
-    align-items: center;
+    color: #fff;
+    background-color: #367fa9;
 
-    box-sizing: border-box;
-    height: $layout-header-height;
+    .iconfont,
+    .user__information {
+      cursor: pointer;
+      padding: 0px 15px;
 
-    h1 {
-      margin-left: $base-space;
-      font-size: 18px;
-      font-family: PingFang SC;
-      font-weight: 800;
-    }
-
-    img {
-      width: 32px;
-    }
-  }
-
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex: 1;
-    height: 100%;
-
-    &__item {
-      font-size: $--font-size-base;
-      + .toolbar__item {
-        padding-left: $base-space * 3;
+      &:hover {
+        background-color: #367fa9;
       }
     }
 
-    &__date {
-      span {
-        + span {
-          margin-left: $base-space * 2;
+    .collapsed {
+      width: 50px;
+    }
+
+    &__title {
+      width: 230px;
+      padding-left: 20px;
+      font-size: 18px;
+      overflow: hidden;
+    }
+
+    &__toolbar {
+      flex: 1 1 auto;
+      display: flex;
+      background-color: #3c8dbc;
+      justify-content: space-between;
+
+      .user__information {
+        color: #fff;
+        font-size: 12px;
+
+        .avatar {
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          vertical-align: middle;
+        }
+
+        .user__name {
+          margin-left: 10px;
         }
       }
-    }
-
-    &__user {
-      color: #fff;
-      cursor: pointer;
-
-      .el-avatar {
-        margin-right: $base-space * 2;
-        vertical-align: middle;
-      }
-
-      span {
-        vertical-align: middle;
-      }
-    }
-
-    &__logout {
-      cursor: pointer;
-
-      i {
-        font-size: $--font-size-medium;
-        margin-right: $base-space * 2;
+      .iconfont {
+        display: inline-block;
+        vertical-align: top;
       }
     }
   }

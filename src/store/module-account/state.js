@@ -16,5 +16,8 @@ export default {
   token: getToken(),
 
   // 登陆账户公共服务基本信息
-  publicUserInfo: getPublicUserInfo()
+  publicUserInfo: getPublicUserInfo(),
+
+  // 修改密码的结果
+  modifyPasswordResult: false
 }

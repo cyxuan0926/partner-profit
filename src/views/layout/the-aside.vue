@@ -1,31 +1,87 @@
 <template>
-  <el-aside>
-    <el-scrollbar>
-      <el-menu
-        :default-active="activeIndex"
-        :router="true"
-        :unique-opened="true"
-        :collapse-transition="false"
-      >
-        <menu-item v-for="menu in menus" :key="menu.path" :menu="menu" />
-      </el-menu>
-    </el-scrollbar>
-  </el-aside>
+  <div class="aside-container">
+    <div class="aside-top">
+      <img :src="userAvatar" class="avatar circle" />
+      <div class="info">
+        <span class="ellipsis">合作商管理员</span>
+      </div>
+    </div>
+
+    <el-menu
+      :default-active="activeIndex"
+      background-color="#222d32"
+      text-color="#b8c7ce"
+      active-text-color="#fff"
+      :collapse="isCollapsed"
+      class="first-level"
+      unique-opened
+      :router="true"
+    >
+      <template v-for="item in menus">
+        <el-menu-item
+          v-if="!item.children.length"
+          class="border-bottom"
+          :popper-append-to-body="false"
+          :key="item.path"
+          :index="item.path"
+        >
+          <i :class="['iconfont', `${item.icon}`]" />
+          <span slot="title">{{ item.name }}</span>
+        </el-menu-item>
+        <el-submenu
+          v-if="item.children.length"
+          :class="['border-bottom', 'second-level']"
+          :key="item.path"
+          :index="item.path"
+        >
+          <template slot="title">
+            <i :class="['iconfont', `${item.icon}`]" />
+            <span>{{ item.name }}</span>
+          </template>
+          <template v-for="second in item.children">
+            <el-menu-item
+              v-if="!second.children.length"
+              :key="second.path"
+              :index="second.path"
+            >
+              {{ second.name }}
+            </el-menu-item>
+            <el-submenu
+              v-else
+              :class="['border-bottom', 'third-level']"
+              :key="second.path"
+              :index="second.path"
+            >
+              <template slot="title">
+                <span>{{ second.name }}</span>
+              </template>
+              <template v-for="third in second.children">
+                <el-menu-item :key="third.path" :index="third.path">
+                  {{ third.name }}
+                </el-menu-item>
+              </template>
+            </el-submenu>
+          </template>
+        </el-submenu>
+      </template>
+    </el-menu>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import menuItem from './menu-item.vue'
+
+import userAvatar from '@/assets/img/user-avatar.jpg'
 
 export default {
-  components: { menuItem },
-
   data() {
-    return {}
+    return {
+      userAvatar
+    }
   },
 
   computed: {
-    ...mapState('account', ['menus']),
+    ...mapState('account', ['menus', 'isCollapsed']),
 
     activeIndex() {
       return this.$route.meta.activeMenu || this.$route.path
@@ -35,31 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-aside {
-  position: relative;
-  width: $layout-siderbar-width !important;
-  background-color: $--color-white;
-  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
-  transition: width 0.3s ease-in-out;
-}
-
-.el-menu {
-  width: $layout-siderbar-width;
-  padding-top: $--font-size-large;
-  border: none;
-  background-color: $--color-white;
-}
-
-.el-scrollbar {
-  height: 100%;
-  background-color: $--color-white;
-
-  ::v-deep &__wrap {
-    overflow-x: hidden;
-  }
-
-  ::v-deep &__bar {
-    right: 0;
-  }
-}
+@import '../../assets/styles/layout';
 </style>

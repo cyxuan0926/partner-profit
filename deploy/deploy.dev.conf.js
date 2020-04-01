@@ -1,7 +1,7 @@
 module.exports = {
   repository: {
     type: 'git',
-    url: 'http://103.37.158.17/yt/front/community-correction.git',
+    url: 'http://103.37.158.17/yt/front/partner-profit.git',
     branch: 'dev'
   },
 
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   remoteOperatesConfig: {
-    remotePath: '/mnt/projects/connginx/www'
+    remotePath: '/mnt/projects/partnernginx'
   },
 
   connectConfig: {

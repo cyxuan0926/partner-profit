@@ -3,5 +3,8 @@ export default {
   componentsKeepAlive: [],
 
   // 加载状态
-  $loading: false
+  $loading: false,
+
+  // 菜单折叠收起状态
+  isCollapsed: false
 }

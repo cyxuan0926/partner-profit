@@ -1,4 +1,5 @@
 import { _import } from '../helper'
+
 import routesPath from '../routes-path'
 
 export default [
@@ -11,7 +12,9 @@ export default [
         name: 'Home',
         path: routesPath.HOME,
         component: _import('dashboard'),
-        meta: { isTheOnlyRoot: true }
+        meta: {
+          isTheOnlyRoot: true
+        }
       }
     ]
   }

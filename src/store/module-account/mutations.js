@@ -15,5 +15,12 @@ export default {
 
   [mutationsAccount.SET_PUBLICUSERINFO]: (state, publicUserInfo) => {
     state.publicUserInfo = publicUserInfo
+  },
+
+  [mutationsAccount.SET_MODIFY_PASSWORD_RESULT]: (
+    state,
+    modifyPasswordResult
+  ) => {
+    state.modifyPasswordResult = modifyPasswordResult
   }
 }

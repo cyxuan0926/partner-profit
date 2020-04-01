@@ -70,5 +70,21 @@ export default {
     } catch (err) {
       Promise.reject(err)
     }
+  },
+
+  // 修改密码
+  async modifyMyPassword({ commit }, { oldPassword, newPassword }) {
+    try {
+      const isSuccess = await accountAPI.modifyMyPassword({
+        oldPassword,
+        newPassword
+      })
+
+      commit(mutationsAccount.SET_MODIFY_PASSWORD_RESULT, isSuccess)
+
+      return isSuccess
+    } catch (err) {
+      Promise.reject(err)
+    }
   }
 }

@@ -4,6 +4,10 @@ import account from './module-account'
 
 import home from './dashboard'
 
+import terminal from './module-terminal'
+
+import partnerInformation from './module-partner-information'
+
 export default [
   {
     path: '*',
@@ -11,5 +15,7 @@ export default [
     meta: {}
   },
   ...account,
-  ...home
+  ...home,
+  ...terminal,
+  ...partnerInformation
 ]

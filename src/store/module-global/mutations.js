@@ -7,5 +7,10 @@ export default {
 
   [mutationsGlobal.SET_LOADING]: (state, loading) => {
     state.$loading = loading
+  },
+
+  [mutationsGlobal.SET_COLLAPSE]: (state, collapse) => {
+    if (collapse === 'isCollapsed') state.isCollapsed = true
+    else state.isCollapsed = !state.isCollapsed
   }
 }

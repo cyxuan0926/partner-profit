@@ -1,7 +1,11 @@
 import axios from 'axios'
+
 import qs from 'qs'
+
 import { requestConfig } from './config'
+
 import { requestHandler } from './request-handler'
+
 import { responseHandler } from './response-handler'
 
 // 请求class
@@ -72,6 +76,17 @@ class HttpClient {
   // PUT请求(urlencoded)
   put(url = '', params = {}, config = {}) {
     return this.instance.put(url, Object.assign({ params }, config))
+  }
+
+  // PUT请求(json)
+  putObj(url = '', data = {}, config = {}) {
+    return this.instance.put(
+      url,
+      data,
+      Object.assign({}, config, {
+        header: { 'Content-Type': 'application/json' }
+      })
+    )
   }
 }
 
