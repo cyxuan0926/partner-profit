@@ -144,7 +144,7 @@ export default {
         }
       }
 
-      console.log(params)
+      return params
     },
 
     // 新增
