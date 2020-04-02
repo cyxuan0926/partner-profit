@@ -16,7 +16,22 @@ export default [
         path: routesPath.COOPERTIVE_PARTNER_INFORMATION_LIST,
         component: _import(
           'module-partner-information/partner-information-list'
-        )
+        ),
+        meta: {
+          componentsKeepAlive: ['partnerInformationList']
+        }
+      },
+      {
+        name: 'CoopertivePartnerInformationCreate',
+        path: routesPath.COOPERTIVE_PARTNER_INFORMATION_CREATE,
+        component: _import(
+          'module-partner-information/partner-information-create'
+        ),
+        meta: {
+          title: '新增合作商',
+          activeMenu: routesPath.COOPERTIVE_PARTNER_INFORMATION_LIST,
+          componentsUnRemoveKeepAlive: ['partnerInformationList']
+        }
       }
     ]
   }

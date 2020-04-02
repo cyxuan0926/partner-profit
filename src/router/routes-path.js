@@ -19,6 +19,10 @@ export default {
   // 合作商信息管理-列表
   COOPERTIVE_PARTNER_INFORMATION_LIST: '/coopertive-partner/information/list',
 
+  // 合作商信息管理-新增
+  COOPERTIVE_PARTNER_INFORMATION_CREATE:
+    '/coopertive-partner/information/create',
+
   // 合作商终端管理
   COOPERTIVE_PARTNER_TERMINAL: '/coopertive-partner/terminal',
 

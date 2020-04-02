@@ -39,6 +39,14 @@ body {
   text-overflow: ellipsis;
 }
 
+.search {
+  padding-bottom: 10px;
+}
+
+.block {
+  padding: 20px 20px 0px;
+}
+
 @media only screen and (max-width: 768px){
   .el-header{
     height: 100px !important;
