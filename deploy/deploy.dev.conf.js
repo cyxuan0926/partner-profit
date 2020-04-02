@@ -12,7 +12,7 @@ module.exports = {
   },
 
   remoteOperatesConfig: {
-    remotePath: '/mnt/projects/partnernginx'
+    remotePath: '/mnt/projects/partnernginx/www'
   },
 
   connectConfig: {
