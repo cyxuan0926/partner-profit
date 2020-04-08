@@ -17,5 +17,5 @@ export const createTerminal = params => {
 
 // 修改终端
 export const editTerminal = params => {
-  return httpClient.putObj('/terminal', params)
+  return httpClient.putObj('/terminal/terminal', params)
 }
