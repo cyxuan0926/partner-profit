@@ -10,6 +10,8 @@ import '@/common/filters'
 
 import '@/common/plugins'
 
+import '@/common/directives'
+
 import './assets/styles/index.scss'
 
 import '@/assets/icons/iconfont.css'

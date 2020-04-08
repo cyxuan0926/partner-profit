@@ -116,7 +116,7 @@ const commonResponseHandler = params => {
   const result = codes[params.status === 200 ? params.data.code : params.status]
   if (!result) {
     tips(params.data ? params.data.msg : handleErrorMessage(params.message))
-    return false
+    return params.data
   }
   result.next && result.next(params.data, params.config.url)
   if (params.data) return params.data

@@ -6,6 +6,8 @@ import { mutationsAccount } from '../module-account/mutation-types'
 
 import { Message } from 'element-ui'
 
+import * as global from '@/services/api/module-common'
+
 export default {
   setComponentsKeepAlive({ commit }, components) {
     commit(mutationsGlobal.SET_COMPONENTS_KEEPALIVE, components)
@@ -31,5 +33,31 @@ export default {
 
   onCollapse({ commit }, collapse) {
     commit(mutationsGlobal.SET_COLLAPSE, collapse)
+  },
+
+  async getPrisonAll({ commit }, params) {
+    try {
+      const { data } = await global.getPrisonAll(params)
+
+      const { jails } = data
+
+      commit(mutationsGlobal.SET_PRISON, jails)
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
+  async getNoPagePartners({ commit }) {
+    try {
+      const { data } = await global.getNoPagePartners()
+
+      commit(mutationsGlobal.SET_NO_PAGE_PARTNERS, data)
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
   }
 }

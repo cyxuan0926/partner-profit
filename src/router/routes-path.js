@@ -27,5 +27,17 @@ export default {
   COOPERTIVE_PARTNER_TERMINAL: '/coopertive-partner/terminal',
 
   // 合作商终端管理-列表
-  COOPERTIVE_PARTNER_TERMINAL_LIST: '/coopertive-partner/terminal/list'
+  COOPERTIVE_PARTNER_TERMINAL_LIST: '/coopertive-partner/terminal/list',
+
+  // 合作商终端管理-终端内容
+  COOPERTIVE_PARTNER_TERMINAL_INFORMATION:
+    '/coopertive-partner/terminal/information',
+
+  // 合作商终端管理-终端内容-新增
+  COOPERTIVE_PARTNER_TERMINAL_INFORMATION_CREATE:
+    '/coopertive-partner/terminal/information/create',
+
+  // 合作商终端管理-终端内容-编辑
+  COOPERTIVE_PARTNER_TERMINAL_INFORMATION_EDIT:
+    '/coopertive-partner/terminal/information/:terminalId'
 }

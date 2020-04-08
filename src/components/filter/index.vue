@@ -19,6 +19,7 @@
         filterable
         v-if="item.type === 'select'"
         v-model="filterParams[item.name]"
+        v-autowidth:8="filterParams[item.name]"
         v-bind="item"
         v-on="itemEvents[item.name]"
         @change="

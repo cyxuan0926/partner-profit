@@ -50,7 +50,7 @@ import { mapState, mapActions } from 'vuex'
 
 import routesPath from '@/router/routes-path'
 
-const pattern = /^(?![^a-zA-Z]+$)(?!\D+$)(?![a-zA-Z0-9]+$).{8,}$/
+const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
 
 export default {
   data() {
@@ -59,7 +59,7 @@ export default {
         callback(new Error('请输入新密码'))
       } else if (!pattern.test(value)) {
         callback(
-          new Error('密码长度至少8位，且必须同时含有字母，数字，特殊字符')
+          new Error('密码必须同时含有大小写字母，数字，特殊字符，且不小于8位')
         )
       } else {
         if (this.formData.checkNewPassword !== '') {
@@ -74,7 +74,7 @@ export default {
         callback(new Error('请再次输入新密码'))
       } else if (!pattern.test(value)) {
         callback(
-          new Error('密码长度至少8位，且必须同时含有字母，数字，特殊字符')
+          new Error('密码必须同时含有大小写字母，数字，特殊字符，且不小于8位')
         )
       } else if (value !== this.formData.newPassword) {
         callback(new Error('两次密码输入不一致'))

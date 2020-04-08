@@ -6,5 +6,11 @@ export default {
   $loading: false,
 
   // 菜单折叠收起状态
-  isCollapsed: false
+  isCollapsed: false,
+
+  // 狱务通监狱
+  prisons: [],
+
+  // 合作商-不分页
+  noPagePartners: []
 }

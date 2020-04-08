@@ -7,7 +7,10 @@
         :on-filter="onFilterForms"
       >
         <template #append>
-          <base-excel-download path="/" :params="excelParams" />
+          <base-excel-download
+            :params="excelParams"
+            path="/cooperative/export/partner"
+          />
 
           <el-button type="primary" @click="onNew">新增合作商</el-button>
         </template>
@@ -15,9 +18,12 @@
     </div>
 
     <div class="partner-information_content content">
-      <base-table :cols="tableCols" :data="[]" stripe>
+      <base-table :cols="tableCols" :data="coopertivePartners.content" stripe>
         <template #operation="{ row }">
-          <el-button type="danger" @click="onDelete(row)" disabled
+          <el-button
+            type="danger"
+            :disabled="!!+row.flag"
+            @click="onDelete(row)"
             >删除</el-button
           >
         </template>
@@ -25,7 +31,7 @@
     </div>
 
     <base-pagination
-      :total="2"
+      :total="coopertivePartners.totalCount"
       :page-size.sync="pagination.rows"
       :current-page.sync="pagination.page"
       @size-change="onSizeChange"
@@ -38,6 +44,8 @@ import { pagination } from '@/common/mixins'
 
 import routesPath from '@/router/routes-path'
 
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'partnerInformationList',
 
@@ -47,49 +55,51 @@ export default {
     const cols = [
       {
         label: '合作商名称',
-        prop: ''
+        prop: 'partnerName',
+        minWidth: 115,
+        showOverflowTooltip: true
       },
       {
         label: '手机号码',
-        prop: ''
-      },
-      {
-        label: '合作商分成比例（%）',
-        prop: '',
-        minWidth: 95
+        prop: 'partnerPhone'
       },
       {
         label: '合作商支付宝账号',
-        prop: ''
+        prop: 'alipayAccount',
+        minWidth: 110,
+        showOverflowTooltip: true
       },
       {
         label: '合作商开户银行',
-        prop: ''
+        prop: 'bank',
+        minWidth: 90
       },
       {
         label: '合作商银行账号',
-        prop: ''
+        prop: 'bankAccount',
+        minWidth: 110,
+        showOverflowTooltip: true
       },
       {
         label: '录入时间',
-        prop: ''
+        prop: 'createTime',
+        minWidth: 110
       },
       {
         label: '操作',
-        slotName: 'operation',
-        minWidth: 60
+        slotName: 'operation'
       }
     ]
 
     const items = [
       {
         type: 'input',
-        name: 'name',
+        name: 'partnerName',
         placeholder: '请输入合作商名称'
       },
       {
         type: 'input',
-        name: 'phone',
+        name: 'partnerPhone',
         placeholder: '请输入手机号码'
       },
       {
@@ -108,43 +118,51 @@ export default {
   },
 
   computed: {
-    excelParams() {
-      const { time, name, phone } = this.filterParams
+    ...mapState('partner', ['coopertivePartners', 'isdeletPartnerSuccess']),
 
-      let start = '',
-        end = ''
+    excelParams() {
+      const { time, partnerName, partnerPhone } = this.filterParams
+
+      let startTime = '',
+        endTime = ''
 
       if (time) {
-        start = time[0]
+        startTime = time[0]
 
-        end = time[1]
+        endTime = time[1]
       }
 
-      return { name, phone, start, end }
+      return { partnerName, partnerPhone, startTime, endTime }
     }
   },
 
   methods: {
+    ...mapActions('partner', ['getCooperativePartners', 'deletePartner']),
+
     // 获取列表数据
     async gettingPageData() {
-      // this.$showLoading()
+      this.$showLoading()
 
-      const { name, phone, time } = this.filterParams
+      const { partnerName, partnerPhone, time } = this.filterParams
 
       let params = {
         ...this.pagination,
-        name,
-        phone
+        partnerName,
+        partnerPhone
       }
       if (time) {
         params = {
           ...params,
-          start: time[0],
-          end: time[1]
+          startTime: time[0],
+          endTime: time[1]
         }
       }
 
-      return params
+      await this.getCooperativePartners(params)
+
+      const total = this.coopertivePartners['totalCount']
+
+      this.$set(this.pageData, 'totalElements', total)
     },
 
     // 新增
@@ -154,14 +172,25 @@ export default {
 
     // 删除
     onDelete(row) {
-      const { name } = row
+      const { partnerName } = row
 
-      const text = `请问确认删除合作商“ ${name} ”吗?`
+      const text = `请问确认删除合作商“ ${partnerName} ”吗?`
 
       this.$confirm(text, '删除合作商', {
         type: 'warning',
         closeOnClickModal: false
-      }).then(() => {})
+      }).then(async () => {
+        const { id } = row
+
+        this.$showLoading()
+
+        await this.deletePartner(id)
+
+        if (this.isdeletPartnerSuccess) {
+          this.calculatePagination()
+          this.gettingPageData()
+        }
+      })
     }
   },
 

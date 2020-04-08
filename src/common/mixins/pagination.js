@@ -11,9 +11,6 @@ export default {
       // 当前页的数据
       pageData: { totalElements: 0, content: [] },
 
-      // 搜索元素
-      filterItems: [],
-
       // 查询参数
       filterParams: {}
     }

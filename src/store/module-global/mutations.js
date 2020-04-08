@@ -12,5 +12,13 @@ export default {
   [mutationsGlobal.SET_COLLAPSE]: (state, collapse) => {
     if (collapse === 'isCollapsed') state.isCollapsed = true
     else state.isCollapsed = !state.isCollapsed
+  },
+
+  [mutationsGlobal.SET_PRISON]: (state, prisons) => {
+    state.prisons = prisons
+  },
+
+  [mutationsGlobal.SET_NO_PAGE_PARTNERS]: (state, noPagePartners) => {
+    state.noPagePartners = noPagePartners
   }
 }

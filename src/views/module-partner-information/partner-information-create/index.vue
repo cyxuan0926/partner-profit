@@ -1,9 +1,9 @@
 <template>
   <div class="partner-information-container">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="160px">
-      <el-form-item label="合作商名称" prop="name">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="140px">
+      <el-form-item label="合作商名称" prop="partnerName">
         <el-input
-          v-model.trim="formData.name"
+          v-model.trim="formData.partnerName"
           placeholder="请输入合作商名称"
           clearable
         />
@@ -11,11 +11,11 @@
 
       <el-form-item
         label="手机号码"
-        prop="phone"
+        prop="partnerPhone"
         :class="['is-required', { 'is-error': phoneIsError }]"
       >
         <el-input
-          v-model.trim="formData.phone"
+          v-model.trim="formData.partnerPhone"
           placeholder="请输入手机号码"
           clearable
           @blur="onPhoneBlur"
@@ -24,14 +24,6 @@
         <div v-if="phoneIsError" class="el-form-item__error">
           {{ phoneErrorMessage }}
         </div>
-      </el-form-item>
-
-      <el-form-item label="合作商分成比例（%）" prop="rate">
-        <el-input
-          v-model="formData.rate"
-          placeholder="请输入合作商分成比例"
-          clearable
-        />
       </el-form-item>
 
       <el-form-item
@@ -43,7 +35,7 @@
           v-model="formData.alipayAccount"
           placeholder="请输入合作商支付宝账号"
           clearable
-          @blur="onAliAccountBlur"
+          @blur="onAlipayAccountBlur"
         />
 
         <div v-if="aliAccountIsError" class="el-form-item__error">
@@ -76,40 +68,26 @@
   </div>
 </template>
 <script>
-// import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+
+import routesPath from '@/router/routes-path'
 
 export default {
   name: 'partnerInformationCreate',
 
   data() {
-    const validateRate = (rule, value, callback) => {
-      const pattern = /^(\d|[1-9]\d)(\.\d{1,2})?$/
-      if (value === '') {
-        callback(new Error('请输入合作商分成比例'))
-      } else if (!pattern.test(value) || parseFloat(value) === 0) {
-        callback(new Error('请输入大于0小于100的数字，且最多只能保留两位小数'))
-      } else {
-        callback()
-      }
-    }
-
     return {
       formData: {
-        name: '',
-        phone: '',
-        rate: '',
+        partnerName: '',
+        partnerPhone: '',
         alipayAccount: '',
         bank: '',
         bankAccount: ''
       },
 
       rules: {
-        name: [
+        partnerName: [
           { required: true, trigger: 'blur', message: '请输入合作商名称' }
-        ],
-        rate: [
-          { validator: validateRate, trigger: 'blur' },
-          { required: true, trigger: 'blur' }
         ]
       },
       phoneIsError: false,
@@ -120,20 +98,54 @@ export default {
   },
 
   computed: {
-    // ...mapState('account', ['modifyPasswordResult'])
+    ...mapState('partner', ['isCreatePartnerSuccess'])
   },
 
   methods: {
-    // ...mapActions('account', ['modifyMyPassword']),
+    ...mapActions('partner', ['createPartner']),
 
     onCancel() {
       this.$router.back()
     },
 
-    onAdd() {},
+    onAdd() {
+      const validatePhone = this.onPhoneBlur()
 
-    onPhoneBlur(e) {
-      const inputValue = e.target.value
+      const validateAlipayAccount = this.onAlipayAccountBlur()
+
+      this.$refs.form.validate(async valid => {
+        if (valid && !validatePhone && !validateAlipayAccount) {
+          this.$showLoading()
+
+          const code = await this.createPartner(this.formData)
+
+          if (this.isCreatePartnerSuccess)
+            this.$router.push(routesPath.COOPERTIVE_PARTNER_INFORMATION_LIST)
+          else if (code === 210 || code === 212) {
+            this.aliAccountIsError = false
+
+            this.aliAccountErrorMessage = ''
+
+            this.phoneIsError = true
+
+            if (code === 212) this.phoneErrorMessage = '手机号码重复'
+
+            if (code === 210) this.phoneErrorMessage = '请输入正确的手机号码'
+          } else if (code === 211) {
+            this.phoneIsError = false
+
+            this.phoneErrorMessage = ''
+
+            this.aliAccountIsError = true
+
+            this.aliAccountErrorMessage = '请输入正确的支付宝账号'
+          }
+        }
+      })
+    },
+
+    onPhoneBlur() {
+      const inputValue = this.formData.partnerPhone
 
       const pattern = /^[1][3456789][0-9]{9}$/
 
@@ -150,10 +162,12 @@ export default {
 
         this.phoneErrorMessage = ''
       }
+
+      return this.phoneIsError
     },
 
-    onAliAccountBlur(e) {
-      const inputValue = e.target.value
+    onAlipayAccountBlur() {
+      const inputValue = this.formData.alipayAccount
 
       if (inputValue === '') {
         this.aliAccountErrorMessage = '请输入支付宝账号'
@@ -164,6 +178,8 @@ export default {
 
         this.aliAccountIsError = false
       }
+
+      return this.aliAccountIsError
     }
   }
 }
