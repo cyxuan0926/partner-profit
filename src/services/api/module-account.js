@@ -39,8 +39,12 @@ export const getMenus = () => {
 
 // 修改账户密码
 export const modifyMyPassword = ({ oldPassword, newPassword }) => {
-  return httpClient.putObj('/users/me/password/by-old-password', {
-    oldPassword,
-    newPassword
-  })
+  return httpClient.putObj(
+    '/users/me/password/by-old-password',
+    {
+      oldPassword,
+      newPassword
+    },
+    basicConfig
+  )
 }

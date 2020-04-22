@@ -1,7 +1,7 @@
 module.exports = {
   repository: {
     type: 'git',
-    url: 'http://103.37.158.17/yt/front/partner-profit.git',
+    url: 'http://39.104.53.150/yt/front/partner-profit.git',
     branch: 'dev'
   },
 

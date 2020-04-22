@@ -50,7 +50,7 @@ import { mapState, mapActions } from 'vuex'
 
 import routesPath from '@/router/routes-path'
 
-const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
+const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/
 
 export default {
   data() {
@@ -58,9 +58,7 @@ export default {
       if (value === '') {
         callback(new Error('请输入新密码'))
       } else if (!pattern.test(value)) {
-        callback(
-          new Error('密码必须同时含有大小写字母，数字，特殊字符，且不小于8位')
-        )
+        callback(new Error('密码必须同时含有大小写字母，数字，且不小于8位'))
       } else {
         if (this.formData.checkNewPassword !== '') {
           this.$refs.passwordForm.validateField('checkNewPassword')
@@ -73,9 +71,7 @@ export default {
       if (value === '') {
         callback(new Error('请再次输入新密码'))
       } else if (!pattern.test(value)) {
-        callback(
-          new Error('密码必须同时含有大小写字母，数字，特殊字符，且不小于8位')
-        )
+        callback(new Error('密码必须同时含有大小写字母，数字，且不小于8位'))
       } else if (value !== this.formData.newPassword) {
         callback(new Error('两次密码输入不一致'))
       } else {
@@ -157,7 +153,7 @@ export default {
 <style lang="scss" scoped>
 .passowrd-container {
   .el-form {
-    width: 43%;
+    width: 45%;
     margin: 0px auto;
     margin-top: 8%;
 
