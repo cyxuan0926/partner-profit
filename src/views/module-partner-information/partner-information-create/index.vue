@@ -154,7 +154,7 @@ export default {
 
         this.phoneIsError = true
       } else if (!pattern.test(inputValue)) {
-        this.phoneErrorMessage = '手机格式有误'
+        this.phoneErrorMessage = '请输入正确的手机号码'
 
         this.phoneIsError = true
       } else {
