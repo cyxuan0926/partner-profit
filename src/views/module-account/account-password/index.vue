@@ -27,7 +27,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="重复新密码密码" prop="checkNewPassword">
+      <el-form-item label="重复新密码" prop="checkNewPassword">
         <el-input
           v-model="formData.checkNewPassword"
           type="password"
