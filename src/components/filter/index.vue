@@ -9,7 +9,7 @@
       <el-input
         v-if="item.type === 'input'"
         v-model.trim="filterParams[item.name]"
-        v-bind="item"
+        v-bind="item.attrs"
         v-on="itemEvents[item.name]"
         clearable
       />
@@ -20,16 +20,8 @@
         v-if="item.type === 'select'"
         v-model="filterParams[item.name]"
         v-autowidth:8="filterParams[item.name]"
-        v-bind="item"
+        v-bind="item.attrs"
         v-on="itemEvents[item.name]"
-        @change="
-          onSelectChange({
-            name: item.name,
-            value: filterParams[item.name],
-            filterItems,
-            filterParams
-          })
-        "
       >
         <el-option
           v-for="(option, i) in item.options"
@@ -40,10 +32,10 @@
       </el-select>
 
       <el-date-picker
-        v-if="isDatePicker(item.type)"
+        v-if="isDatePicker(item.attrs['type'])"
         v-model="filterParams[item.name]"
         unlink-panels
-        v-bind="item"
+        v-bind="item.attrs"
         v-on="itemEvents[item.name]"
       />
     </el-form-item>
@@ -92,11 +84,6 @@ export default {
     onFilter: {
       type: Function,
       default: function() {}
-    },
-
-    onSelectChange: {
-      type: Function,
-      default: function() {}
     }
   },
 
@@ -142,6 +129,7 @@ export default {
       })
 
       this.$emit('input', this.normalizedFilterParams)
+
       this.onFilter(this.normalizedFilterParams)
     },
 

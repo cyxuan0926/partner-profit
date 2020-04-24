@@ -91,14 +91,21 @@ export default {
 
     const items = [
       {
-        type: 'input',
+        type: 'select',
         name: 'partnerName',
-        placeholder: '请输入合作商名称'
+        labelKey: 'partnerName',
+        valueKey: 'partnerName',
+        defaultValue: null,
+        attrs: {
+          placeholder: '请选择合作商名称'
+        }
       },
       {
         type: 'input',
         name: 'uniqueId',
-        placeholder: '请输入终端唯一标识'
+        attrs: {
+          placeholder: '请输入终端唯一标识'
+        }
       }
     ]
 
@@ -109,11 +116,15 @@ export default {
   },
 
   computed: {
-    ...mapState('terminal', ['terminals'])
+    ...mapState('terminal', ['terminals']),
+
+    ...mapState('global', ['noPagePartners'])
   },
 
   methods: {
     ...mapActions('terminal', ['getTerminals']),
+
+    ...mapActions('global', ['getNoPagePartners']),
 
     // 获取列表数据
     async gettingPageData() {
@@ -143,7 +154,21 @@ export default {
   },
 
   async created() {
-    await this.gettingPageData()
+    const partnerNameIndex = this.filterItems.findIndex(
+      item => item.name === 'partnerName'
+    )
+
+    this.$set(this.filterItems[partnerNameIndex], 'loading', true)
+
+    await Promise.all([this.gettingPageData(), this.getNoPagePartners()])
+
+    this.$set(
+      this.filterItems[partnerNameIndex],
+      'options',
+      this.noPagePartners
+    )
+
+    this.$set(this.filterItems[partnerNameIndex], 'loading', false)
   }
 }
 </script>

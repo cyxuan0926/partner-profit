@@ -4,12 +4,14 @@ export default {
       const prisonSearchItem = {
         name: 'jailId',
         type: 'select',
-        placeholder: '请选择监狱名称',
         loading: true,
         labelKey: 'title',
         valueKey: 'id',
         defaultValue: null,
-        options: []
+        options: [],
+        attrs: {
+          placeholder: '请选择监狱名称'
+        }
       }
 
       this.filterItems = [prisonSearchItem, ...this.filterItems]

@@ -95,19 +95,25 @@ export default {
       {
         type: 'input',
         name: 'partnerName',
-        placeholder: '请输入合作商名称'
+        attrs: {
+          placeholder: '请输入合作商名称'
+        }
       },
       {
         type: 'input',
         name: 'partnerPhone',
-        placeholder: '请输入手机号码'
+        attrs: {
+          placeholder: '请输入手机号码'
+        }
       },
       {
         name: 'time',
-        type: 'daterange',
-        startPlaceholder: '开始时间',
-        endPlaceholder: '结束时间',
-        valueFormat: 'yyyy-MM-dd'
+        attrs: {
+          type: 'daterange',
+          startPlaceholder: '开始时间',
+          endPlaceholder: '结束时间',
+          valueFormat: 'yyyy-MM-dd'
+        }
       }
     ]
 
