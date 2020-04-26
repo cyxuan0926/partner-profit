@@ -122,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   position: relative;
-  background: url('../../../assets/img/login-bg.png') 0 60% no-repeat;
+  background: url('../../../assets/img/login-bg.png') center no-repeat;
   background-size: cover;
   min-height: 100vh;
 
@@ -152,11 +152,11 @@ export default {
 
     .el-form {
       max-width: 366px;
-      padding: 30px 0px;
+      padding: 1rem 0px;
 
       .submit {
         width: 100%;
-        margin-top: $base-space * 3;
+        margin-top: 0.1rem;
         box-shadow: 0px 1px 2px 0px rgba(8, 82, 176, 0.24),
           0px 10px 9px -6px rgba(8, 78, 174, 0.32);
       }
