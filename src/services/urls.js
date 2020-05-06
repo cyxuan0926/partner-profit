@@ -18,7 +18,7 @@ const config = {
   // 线上环境
   prod: {
     publicApiHost: 'https://auth-api.yuwugongkai.com',
-    apiHost: '',
+    apiHost: 'https://partner-api.yuwugongkai.com',
     ywtApiHost: 'https://www.yuwugongkai.com/ywgk'
   }
 }
