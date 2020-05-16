@@ -81,7 +81,9 @@ export default {
   },
 
   computed: {
-    ...mapState('account', ['menus', 'isCollapsed']),
+    ...mapState('account', ['menus']),
+
+    ...mapState('global', ['isCollapsed']),
 
     activeIndex() {
       return this.$route.meta.activeMenu || this.$route.path
