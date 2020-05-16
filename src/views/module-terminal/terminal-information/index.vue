@@ -219,6 +219,8 @@ export default {
               ...params,
               partnerName: choosePartner[0]['partnerName']
             }
+          } else {
+            params['partnerName'] = ''
           }
 
           if (this.status === 'add') code = await this.createTerminal(params)
