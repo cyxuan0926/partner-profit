@@ -127,6 +127,7 @@ export default {
     },
 
     onReset() {
+      this.$refs.passwordForm.clearValidate()
       for (let key of Object.keys(this.formData)) {
         this.$set(this.formData, key, '')
       }
