@@ -164,10 +164,6 @@ export default {
     width: 24em;
   }
 
-  ::v-deep .el-input__icon {
-    line-height: 35px;
-  }
-
   ::v-deep .el-button {
     vertical-align: middle;
     height: 34px;
